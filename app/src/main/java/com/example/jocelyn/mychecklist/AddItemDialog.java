@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 /**
@@ -12,6 +13,12 @@ import android.view.LayoutInflater;
  */
 
 public class AddItemDialog extends DialogFragment {
+
+    public Thingy thingy;
+
+    public abstract static class Thingy {
+        public abstract void idk(Item item);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -22,7 +29,10 @@ public class AddItemDialog extends DialogFragment {
                 .setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        Item item = new Item("[insert name]", 3);
+                        if (thingy != null) {
+                            thingy.idk(item);
+                        }
                     }
                 })
                 .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {

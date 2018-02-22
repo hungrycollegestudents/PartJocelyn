@@ -24,19 +24,21 @@ public class MainActivity extends AppCompatActivity {
     //ArrayList<String> items = new ArrayList<>();
     //ArrayAdapter<String> itemsArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
 
+    ListView listView;
     ArrayList<Item> itemsArray = new ArrayList<>();
-    ItemAdapter adapter = new ItemAdapter(this, itemsArray);
+    ItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView listView = (ListView) findViewById(R.id.listItems);
+
+        listView = (ListView) findViewById(R.id.listItems);
+        adapter = new ItemAdapter(this, itemsArray);
         listView.setAdapter(adapter);
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.my_Toolbar);
-        //setSupportActionBar(myToolbar);
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.checklist_toolbar, menu);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
     }
 
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_addItem:
-
+                promptAddItem();
                 return true;
 
             case R.id.action_deleteItem:
@@ -64,13 +66,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void promptAddItem(){
-        DialogFragment newFragment = new AddItemDialog();
-        newFragment.show(getSupportFragmentManager(), "adding");
+        AddItemDialog newFragment = new AddItemDialog();
+        newFragment.thingy = new AddItemDialog.Thingy() {
+            @Override
+            public void idk(Item item) {
+                System.out.println("WOW!");
+                addItem(item.name, item.quantity);
+            }
+        };
+        newFragment.show(getFragmentManager(), "adding");
+        //newFragment.show(getSupportFragmentManager(), "adding");
     }
 
     public void addItem(String name, int quantity){
         Item newItem = new Item(name, quantity);
-        adapter.add(newItem);
+        itemsArray.add(newItem);
+        adapter.notifyDataSetChanged();
+        //adapter.add(newItem);
     }
 
     public void clearList(){

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MyChecklist.iml" filepath="$PROJECT_DIR$/MyChecklist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PartJocelyn.iml" filepath="$PROJECT_DIR$/PartJocelyn.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

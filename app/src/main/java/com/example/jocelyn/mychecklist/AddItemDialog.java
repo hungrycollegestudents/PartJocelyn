@@ -5,8 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
 import android.view.LayoutInflater;
+import android.widget.EditText;
 
 /**
  * Created by Jocelyn on 2/22/2018.
@@ -29,10 +30,21 @@ public class AddItemDialog extends DialogFragment {
                 .setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Item item = new Item("[insert name]", 3);
+                        EditText nameField = (EditText) ((Dialog)
+                                dialogInterface).findViewById(R.id.itemEntry);
+                        Editable nameEditable = nameField.getText();
+                        String itemName = nameEditable.toString();
+
+                        EditText quantityField = (EditText) ((Dialog)
+                                dialogInterface).findViewById(R.id.quantityEntry);
+                        Editable quantityEditable = quantityField.getText();
+                        String quantity_string = quantityEditable.toString();
+
+                        Item item = new Item(itemName, Integer.valueOf(quantity_string));
                         if (thingy != null) {
                             thingy.idk(item);
                         }
+
                     }
                 })
                 .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
@@ -43,4 +55,5 @@ public class AddItemDialog extends DialogFragment {
                 });
         return builder.create();
     }
+
 }

@@ -34,6 +34,10 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView name_View = (TextView) convertView.findViewById(R.id.name_view);
         TextView quantity_view = (TextView) convertView.findViewById(R.id.quantity_view);
 
+
+        name_View.setText(item.name);
+        quantity_view.setText(String.valueOf(item.quantity));
+
         //return the new view layout to show to screen
         return convertView;
 

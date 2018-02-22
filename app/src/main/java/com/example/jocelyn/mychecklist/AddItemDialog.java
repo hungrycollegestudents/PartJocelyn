@@ -18,7 +18,7 @@ public class AddItemDialog extends DialogFragment {
     public Thingy thingy;
 
     public abstract static class Thingy {
-        public abstract void idk(Item item);
+        public abstract void idk(String name, int quantity);
     }
 
     @Override
@@ -40,9 +40,8 @@ public class AddItemDialog extends DialogFragment {
                         Editable quantityEditable = quantityField.getText();
                         String quantity_string = quantityEditable.toString();
 
-                        Item item = new Item(itemName, Integer.valueOf(quantity_string));
                         if (thingy != null) {
-                            thingy.idk(item);
+                            thingy.idk(itemName, Integer.valueOf(quantity_string));
                         }
 
                     }

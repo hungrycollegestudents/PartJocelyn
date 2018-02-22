@@ -13,9 +13,9 @@ import java.util.ArrayList;
  * Created by Jocelyn on 2/21/2018.
  */
 
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class ItemAdapter extends ArrayAdapter<LineItem> {
 
-    public ItemAdapter(Context context, ArrayList<Item> items){
+    public ItemAdapter(Context context, ArrayList<LineItem> items){
         super(context, 0, items);
     }
 
@@ -23,7 +23,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     public View getView(int position, View convertView, ViewGroup parent){
 
         //get data item at designated position
-        Item item = getItem(position);
+        LineItem lineItem = getItem(position);
+        Item item = lineItem.getItem();
 
         //checks if an existing view is being reused
         if(convertView == null){
@@ -35,8 +36,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         TextView quantity_view = (TextView) convertView.findViewById(R.id.quantity_view);
 
 
-        name_View.setText(item.name);
-        quantity_view.setText(String.valueOf(item.quantity));
+        name_View.setText(item.getName());
+        quantity_view.setText(String.valueOf(lineItem.getQuantity()));
 
         //return the new view layout to show to screen
         return convertView;

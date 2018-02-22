@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
+import android.widget.EditText;
 
 /**
  * Created by Jocelyn on 2/22/2018.
@@ -23,6 +25,7 @@ public class AddItemDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+
                     }
                 })
                 .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
@@ -33,4 +36,6 @@ public class AddItemDialog extends DialogFragment {
                 });
         return builder.create();
     }
+
+    public interface NoticeDialogListener
 }

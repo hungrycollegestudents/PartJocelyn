@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_addItem:
+                promptAddItem();
 
                 return true;
 
@@ -65,11 +67,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void promptAddItem(){
         DialogFragment newFragment = new AddItemDialog();
-        newFragment.show(getSupportFragmentManager(), "adding");
+        newFragment.show(getFragmentManager(), "adding");
     }
 
-    public void addItem(String name, int quantity){
-        Item newItem = new Item(name, quantity);
+    public void addItem(){
+
+        EditText nameField = findViewById(R.id.itemEntry);
+        Editable nameEditable = nameField.getText();
+        String itemName = nameEditable.toString();
+
+        EditText quantityField = findViewById(R.id.itemEntry);
+        Editable quantityEditable = quantityField.getText();
+        String quantity_string = quantityEditable.toString();
+
+        int quantity = Integer.parseInt(quantity_string);
+
+        Item newItem = new Item(itemName, quantity);
         adapter.add(newItem);
     }
 

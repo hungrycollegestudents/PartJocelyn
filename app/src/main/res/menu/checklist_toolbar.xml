@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_addItem"
+        android:icon="@drawable/ic_add_circle_black_24dp"
+        android:title="@string/app_name"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_deleteItem"
+        android:icon="@drawable/ic_delete_black_24dp"
+        android:title="@string/app_name"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_refreshPrices"
+        android:icon="@color/colorPrimaryDark"
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom"/>
+
+</menu>

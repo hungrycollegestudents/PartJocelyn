@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyChecklist</string>
+    <string name ="refresh">Refresh</string>
+    <string name ="Ok">Ok</string>
+    <string name = "Cancel">Cancel</string>
+    <string name = "userAddItem">Enter Item and Quantity:</string>
+
+</resources>

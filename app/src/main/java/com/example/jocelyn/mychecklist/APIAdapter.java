@@ -34,7 +34,7 @@ public class APIAdapter {
 
 
         String url = String.format(
-                "http://www.mocky.io/v2/5a8c9a783000005700323f9c",
+                "https://grocery-list-cs3354.herokuapp.com/search?name=%s",
                 name);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

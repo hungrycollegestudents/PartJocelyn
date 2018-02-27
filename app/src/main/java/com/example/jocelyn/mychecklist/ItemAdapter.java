@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * Created by Jocelyn on 2/21/2018.
  */
 
-public class ItemAdapter extends ArrayAdapter<LineItem> {
+public class ItemAdapter extends ArrayAdapter<LineItem> implements View.OnClickListener {
 
     public ItemAdapter(Context context, ArrayList<LineItem> items){
         super(context, 0, items);
@@ -27,21 +28,28 @@ public class ItemAdapter extends ArrayAdapter<LineItem> {
         Item item = lineItem.getItem();
 
         //checks if an existing view is being reused
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_view, parent, false);
         }
 
-
-        TextView name_View = (TextView) convertView.findViewById(R.id.name_view);
+        CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
         TextView quantity_view = (TextView) convertView.findViewById(R.id.quantity_view);
 
 
-        name_View.setText(item.getName());
+        checkbox.setText(item.getName());
         quantity_view.setText(String.valueOf(lineItem.getQuantity()));
+
+        checkbox.setOnClickListener(this);
 
         //return the new view layout to show to screen
         return convertView;
 
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        //TODO: this handles clicks for the entire view, not each individual checkbox
+        System.out.println(view.getId());
     }
 }

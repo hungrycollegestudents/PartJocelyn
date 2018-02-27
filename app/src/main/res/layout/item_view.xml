@@ -4,11 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/name_view"
+    <CheckBox
+        android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Item"/>
+        android:layout_weight="1"
+        android:text="CheckBox"
+        android:textAllCaps="false" />
+
     <TextView
         android:id="@+id/quantity_view"
         android:layout_width="wrap_content"

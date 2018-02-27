@@ -20,4 +20,8 @@
         android:title="@string/refresh"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_clearList"
+        android:title="@string/clear"
+        app:showAsAction="ifRoom"/>
+
 </menu>

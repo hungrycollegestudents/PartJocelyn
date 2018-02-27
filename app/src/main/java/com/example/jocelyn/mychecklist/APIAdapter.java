@@ -25,6 +25,7 @@ public class APIAdapter {
 
         //If we are running in the emulator, just pretend to do stuff
         if (MainActivity.isEmulator()) {
+            System.out.println("Simulating API query");
             Price price = new Price(123.45);
             Item item = new Item("SIMULATED: " + name, price);
 

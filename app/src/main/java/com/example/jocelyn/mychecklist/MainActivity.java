@@ -25,10 +25,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    //ArrayList<String> items = new ArrayList<>();
-    //ArrayAdapter<String> itemsArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-
     ListView listView;
     ArrayList<LineItem> itemsArray = new ArrayList<>();
     ItemAdapter adapter;
@@ -73,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_refreshPrices:
+                refreshPrices();
+                return true;
+
+            case R.id.action_clearList:
+                clearList();
                 return true;
         }
         return false;
@@ -89,11 +90,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         newFragment.show(getFragmentManager(), "adding");
-        //newFragment.show(getSupportFragmentManager(), "adding");
     }
 
-    public void addItem(String name, int quantity) {
-
+    private Item search(String name) {
         final Item item = new Item();
 
         api.queryItem(name, new APIAdapter.SearchListener() {
@@ -107,14 +106,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        return item;
+    }
+
+    public void addItem(String name, int quantity) {
+
+        Item item = search(name);
+
         LineItem lineItem = new LineItem(item, quantity);
 
         itemsArray.add(lineItem);
         adapter.notifyDataSetChanged();
     }
 
-    public void clearList(){
-        adapter.clear();
+    public void refreshPrices() {
+        for (LineItem lineItem : itemsArray) {
+            String name = lineItem.getItem().getName();
+            Item item = search(name);
+
+            lineItem.setItem(item);
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    public void clearList() {
+        itemsArray.clear();
+        adapter.notifyDataSetChanged();
     }
 
 

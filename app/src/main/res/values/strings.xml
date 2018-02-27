@@ -4,5 +4,6 @@
     <string name ="Ok">Ok</string>
     <string name = "Cancel">Cancel</string>
     <string name = "userAddItem">Enter Item and Quantity:</string>
+    <string name="clear">Clear</string>
 
 </resources>

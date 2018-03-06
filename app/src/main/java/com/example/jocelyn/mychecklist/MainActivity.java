@@ -2,6 +2,7 @@ package com.example.jocelyn.mychecklist;
 
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.nfc.Tag;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
@@ -14,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -22,6 +25,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +44,27 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listItems);
         adapter = new ItemAdapter(this, itemsArray);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox);
+
+                boolean checked = !checkbox.isChecked();
+
+                checkbox.setChecked(checked);
+
+                if (checked) {
+                    checkbox.setPaintFlags(checkbox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    checkbox.setPaintFlags(checkbox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+
+                LineItem lineItem = adapter.getItem(i);
+                lineItem.setChecked(checked);
+
+            }
+        });
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -66,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_deleteItem:
+                deleteCheckedItems();
                 return true;
 
             case R.id.action_refreshPrices:
@@ -132,6 +158,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void clearList() {
         itemsArray.clear();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void deleteCheckedItems() {
+        Iterator<LineItem> iterator = itemsArray.iterator();
+        while (iterator.hasNext()) {
+            LineItem lineItem = iterator.next();
+            if (lineItem.isChecked()) {
+                iterator.remove();
+            }
+        }
         adapter.notifyDataSetChanged();
     }
 

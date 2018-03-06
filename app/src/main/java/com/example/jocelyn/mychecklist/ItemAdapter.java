@@ -14,14 +14,14 @@ import java.util.ArrayList;
  * Created by Jocelyn on 2/21/2018.
  */
 
-public class ItemAdapter extends ArrayAdapter<LineItem> implements View.OnClickListener {
+public class ItemAdapter extends ArrayAdapter<LineItem> {
 
-    public ItemAdapter(Context context, ArrayList<LineItem> items){
+    public ItemAdapter(Context context, ArrayList<LineItem> items) {
         super(context, 0, items);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         //get data item at designated position
         LineItem lineItem = getItem(position);
@@ -39,17 +39,9 @@ public class ItemAdapter extends ArrayAdapter<LineItem> implements View.OnClickL
         checkbox.setText(item.getName());
         quantity_view.setText(String.valueOf(lineItem.getQuantity()));
 
-        checkbox.setOnClickListener(this);
-
         //return the new view layout to show to screen
         return convertView;
 
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        //TODO: this handles clicks for the entire view, not each individual checkbox
-        System.out.println(view.getId());
     }
 }

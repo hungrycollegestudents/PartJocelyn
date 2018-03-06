@@ -2,7 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants">
+
 
     <CheckBox
         android:id="@+id/checkbox"
@@ -10,7 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="CheckBox"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 
     <TextView
         android:id="@+id/quantity_view"

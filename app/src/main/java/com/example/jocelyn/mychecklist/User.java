@@ -6,15 +6,15 @@ import java.util.ArrayList;
  * Created by jacob on 3/23/18.
  */
 
-public class ChecklistContainer {
+public class User {
 
     private ArrayList<Checklist> checklists;
+`
+    private static User instance;
 
-    private static ChecklistContainer instance;
-
-    public static ChecklistContainer getInstance() {
+    public static User getInstance() {
         if (instance == null) {
-            instance = new ChecklistContainer();
+            instance = new User();
         }
 
         return instance;

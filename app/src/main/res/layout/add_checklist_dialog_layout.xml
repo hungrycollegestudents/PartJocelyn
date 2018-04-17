@@ -9,9 +9,9 @@
         android:layout_height="wrap_content"
         android:text="Add Checklist"/>
     <EditText
-        android:id="@+id/itemEntry"
+        android:id="@+id/checklistEntry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Item"/>
+        android:hint="Name"/>
 
 </LinearLayout>

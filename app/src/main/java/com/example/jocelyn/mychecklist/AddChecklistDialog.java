@@ -31,7 +31,7 @@ public class AddChecklistDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         EditText nameField = (EditText) ((Dialog)
-                                dialogInterface).findViewById(R.id.itemEntry);
+                                dialogInterface).findViewById(R.id.checklistEntry);
                         Editable nameEditable = nameField.getText();
                         String itemName = nameEditable.toString();
 

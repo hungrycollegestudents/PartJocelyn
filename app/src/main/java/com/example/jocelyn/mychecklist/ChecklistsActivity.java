@@ -3,6 +3,7 @@ package com.example.jocelyn.mychecklist;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.nfc.Tag;
 import android.os.Build;
@@ -40,34 +41,50 @@ public class ChecklistsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_checklists);
 
-        checklists.add(new Checklist("Default"));
 
-        listView = (ListView) findViewById(R.id.listItems);
+        listView = (ListView) findViewById(R.id.listChecklists);
 
         adapter = new ChecklistAdapter(this, checklists);
         listView.setAdapter(adapter);
 
-       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //Checklist cl = (Checklist) getIntent().getSerializableExtra("checklist");
+
+//        if (cl != null) {
+//            System.out.println("TEST");
+//            //System.out.println(cl.getName());
+//            for (Checklist c : checklists) {
+//                if (c.getId() == cl.getId()) {
+//                    c.setLineItems(cl.getLineItems());
+//                    break;
+//                }
+//            }
+//        } else {
+//            addChecklist("Test Checklist");
+//        }
+
+        addChecklist("Test Checklist");
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkbox);
-
-                boolean checked = !checkbox.isChecked();
-
-                checkbox.setChecked(checked);
-
                 Checklist checklist = adapter.getItem(i);
-                lineItem.setChecked(checked);
-
-                adapter.notifyDataSetChanged();
-
+                System.out.println(view);
+                test(i);
             }
-        });*/
+        });
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+    }
+
+    public void test(int i) {
+        //pass checklist items to new activity
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("checklist", checklists.get(i));
+        startActivity(intent);
     }
 
 
@@ -81,7 +98,7 @@ public class ChecklistsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.action_addItem:
-                //promptAddItem();
+                promptAddChecklist();
                 return true;
 
             case R.id.action_deleteItem:
@@ -93,11 +110,16 @@ public class ChecklistsActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_clearList:
-                //clearList();
+                clearList();
                 return true;
         }
         return false;
 
+    }
+
+    public void clearList() {
+        checklists.clear();
+        adapter.notifyDataSetChanged();
     }
 
     public void addChecklist(String name) {
@@ -106,7 +128,7 @@ public class ChecklistsActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void promptAddItem(){
+    public void promptAddChecklist(){
         AddChecklistDialog newFragment = new AddChecklistDialog();
         newFragment.thingy = new AddChecklistDialog.Thingy() {
             @Override

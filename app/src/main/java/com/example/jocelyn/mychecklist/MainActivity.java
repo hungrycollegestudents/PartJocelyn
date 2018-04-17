@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listView;
     View totalView;
-    ArrayList<LineItem> itemsArray = new ArrayList<>();
+    //ArrayList<LineItem> itemsArray = new ArrayList<>();
+    Checklist checklist;
     ItemAdapter adapter;
 
     RequestQueue queue;
@@ -46,12 +47,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Intent myIntent = new Intent(this, ChecklistsActivity.class);
+        //startActivity(myIntent);
+
+        checklist = (Checklist) getIntent().getSerializableExtra("checklist");
+
+
         listView = (ListView) findViewById(R.id.listItems);
 
         totalView = getLayoutInflater().inflate(R.layout.total_view, null);
         listView.addFooterView(totalView);
 
-        adapter = new ItemAdapter(this, itemsArray);
+        adapter = new ItemAdapter(this, checklist.getLineItems());
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,13 +81,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-
+        for (LineItem lineItem : checklist.getLineItems()) {
+            checklist.add(lineItem);
+        }
+        refreshPrices();
 
         queue = Volley.newRequestQueue(this.getApplicationContext());
 
         //Create object that adapts http json API (probably should change to singleton)
         api = new APIAdapter(queue);
     }
+
+
 
     public void test() {
 
@@ -150,14 +162,14 @@ public class MainActivity extends AppCompatActivity {
 
         LineItem lineItem = new LineItem(item, quantity);
 
-        itemsArray.add(lineItem);
+        checklist.add(lineItem);
         adapter.notifyDataSetChanged();
 
         ((TextView) totalView.findViewById(R.id.total_text)).setText(String.valueOf(getTotal()));
     }
 
     public void refreshPrices() {
-        for (LineItem lineItem : itemsArray) {
+        for (LineItem lineItem : checklist.getLineItems()) {
             String name = lineItem.getItem().getName();
             Item item = search(name);
 
@@ -168,20 +180,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clearList() {
-        itemsArray.clear();
+        checklist.getLineItems().clear();
         adapter.notifyDataSetChanged();
     }
 
     public float getTotal() {
         float total = 0;
-        for (LineItem lineItem : itemsArray) {
+        for (LineItem lineItem : checklist.getLineItems()) {
             total += lineItem.getQuantity() * lineItem.getItem().getPrice().getAmount();
         }
         return total;
     }
 
     public void deleteCheckedItems() {
-        Iterator<LineItem> iterator = itemsArray.iterator();
+        Iterator<LineItem> iterator = checklist.getLineItems().iterator();
         while (iterator.hasNext()) {
             LineItem lineItem = iterator.next();
             if (lineItem.isChecked()) {

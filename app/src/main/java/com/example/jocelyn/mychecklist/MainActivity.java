@@ -1,7 +1,9 @@
 package com.example.jocelyn.mychecklist;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.nfc.Tag;
 import android.os.Build;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -30,6 +34,7 @@ import java.util.Iterator;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
+    View totalView;
     ArrayList<LineItem> itemsArray = new ArrayList<>();
     ItemAdapter adapter;
 
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listItems);
+
+        totalView = getLayoutInflater().inflate(R.layout.total_view, null);
+        listView.addFooterView(totalView);
+
         adapter = new ItemAdapter(this, itemsArray);
         listView.setAdapter(adapter);
 
@@ -54,14 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
                 checkbox.setChecked(checked);
 
-                if (checked) {
-                    checkbox.setPaintFlags(checkbox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                } else {
-                    checkbox.setPaintFlags(checkbox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                }
-
                 LineItem lineItem = adapter.getItem(i);
                 lineItem.setChecked(checked);
+
+                adapter.notifyDataSetChanged();
 
             }
         });
@@ -75,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Create object that adapts http json API (probably should change to singleton)
         api = new APIAdapter(queue);
+    }
+
+    public void test() {
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -143,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
 
         itemsArray.add(lineItem);
         adapter.notifyDataSetChanged();
+
+        ((TextView) totalView.findViewById(R.id.total_text)).setText(String.valueOf(getTotal()));
     }
 
     public void refreshPrices() {
@@ -161,6 +172,14 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    public float getTotal() {
+        float total = 0;
+        for (LineItem lineItem : itemsArray) {
+            total += lineItem.getQuantity() * lineItem.getItem().getPrice().getAmount();
+        }
+        return total;
+    }
+
     public void deleteCheckedItems() {
         Iterator<LineItem> iterator = itemsArray.iterator();
         while (iterator.hasNext()) {
@@ -169,7 +188,9 @@ public class MainActivity extends AppCompatActivity {
                 iterator.remove();
             }
         }
+
         adapter.notifyDataSetChanged();
+        listView.invalidate();
     }
 
 

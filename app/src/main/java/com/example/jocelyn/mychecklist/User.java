@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class User {
 
     private ArrayList<Checklist> checklists;
-`
+
     private static User instance;
 
     public static User getInstance() {

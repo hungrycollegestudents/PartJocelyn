@@ -18,9 +18,9 @@
         android:focusableInTouchMode="false"/>
 
     <TextView
-        android:id="@+id/quantity_view"
+        android:id="@+id/price_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantity"/>
+        android:text="Price" />
 
 </LinearLayout>

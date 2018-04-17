@@ -1,6 +1,7 @@
 package com.example.jocelyn.mychecklist;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +34,17 @@ public class ItemAdapter extends ArrayAdapter<LineItem> {
         }
 
         CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
-        TextView quantity_view = (TextView) convertView.findViewById(R.id.quantity_view);
+        TextView price_view = (TextView) convertView.findViewById(R.id.price_view);
 
 
-        checkbox.setText(item.getName());
-        quantity_view.setText(String.valueOf(lineItem.getQuantity()));
+        checkbox.setText(String.valueOf(lineItem.getQuantity()) + "x " + item.getName());
+        price_view.setText(String.valueOf(lineItem.getItem().getPrice().getAmount()));
+
+        if (checkbox.isChecked()) {
+            checkbox.setPaintFlags(checkbox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            checkbox.setPaintFlags(checkbox.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
 
         //return the new view layout to show to screen
         return convertView;

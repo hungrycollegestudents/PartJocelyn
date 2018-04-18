@@ -1,4 +1,4 @@
-package com.example.jocelyn.mychecklist;
+package com.example.jocelyn.mychecklist.model;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.jocelyn.mychecklist;
+package com.example.jocelyn.mychecklist.api;
 
 
 import android.util.Log;
@@ -8,6 +8,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.jocelyn.mychecklist.model.Item;
+import com.example.jocelyn.mychecklist.model.Price;
+import com.example.jocelyn.mychecklist.view.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

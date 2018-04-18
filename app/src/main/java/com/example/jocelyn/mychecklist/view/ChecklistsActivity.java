@@ -1,35 +1,20 @@
-package com.example.jocelyn.mychecklist;
+package com.example.jocelyn.mychecklist.view;
 
-import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
-import android.nfc.Tag;
-import android.os.Build;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import com.example.jocelyn.mychecklist.model.Checklist;
+import com.example.jocelyn.mychecklist.R;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ChecklistsActivity extends AppCompatActivity {
 

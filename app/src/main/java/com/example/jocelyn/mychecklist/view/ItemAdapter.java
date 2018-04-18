@@ -1,4 +1,4 @@
-package com.example.jocelyn.mychecklist;
+package com.example.jocelyn.mychecklist.view;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import com.example.jocelyn.mychecklist.model.Item;
+import com.example.jocelyn.mychecklist.model.LineItem;
+import com.example.jocelyn.mychecklist.R;
 
 import java.util.ArrayList;
 

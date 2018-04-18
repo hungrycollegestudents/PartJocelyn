@@ -31,7 +31,7 @@ public class ChecklistTest {
 
         Checklist cl = Controller.getInstance().getChecklist(0);
         String initialName = cl.getName();
-        cl.setName("Wow");
+        Controller.getInstance().editChecklist(0, "Wow");
 
         assertNotEquals(initialName, cl.getName());
         assertEquals(cl.getName(), "Wow");
@@ -52,8 +52,14 @@ public class ChecklistTest {
 
     @Test
     public void success_delete_last() throws Exception {
+
         Checklist newCL = new Checklist("Test");
         Controller.getInstance().addChecklist(newCL);
+
+        int s = Controller.getInstance().getChecklists().size();
+        for (int i = 0; i < s; i++) {
+            Controller.getInstance().deleteChecklist(0);
+        }
 
         assertEquals(Controller.getInstance().getChecklists().size(), 1);
         Controller.getInstance().deleteChecklist(0);
@@ -69,7 +75,7 @@ public class ChecklistTest {
 
         Checklist cl = Controller.getInstance().getChecklist(0);
         String initialName = cl.getName();
-        cl.setName("");
+        Controller.getInstance().editChecklist(0, "");
 
         assertEquals(initialName, cl.getName());
         assertNotEquals(cl.getName(), "");

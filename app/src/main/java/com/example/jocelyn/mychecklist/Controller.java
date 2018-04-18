@@ -71,6 +71,11 @@ public class Controller {
     public Item search(String name) {
         final Item item = new Item();
 
+        if (api == null) {
+            item.setName(name);
+            return item;
+        }
+
         api.queryItem(name, new APIAdapter.SearchListener() {
             @Override
             public void onComplete(Item i) {
@@ -122,14 +127,31 @@ public class Controller {
     }
 
     public void deleteChecklist(Checklist checklist) {
-        User.getInstance().getChecklists().remove(checklist);
+        if (getChecklists().size() > 1) {
+            User.getInstance().getChecklists().remove(checklist);
+        } else {
+            getChecklist(0).setName("Untitled");
+            getChecklist(0).setLineItems(new ArrayList<LineItem>());
+        }
     }
 
     public void deleteChecklist(int i) {
-        User.getInstance().getChecklists().remove(i);
+        deleteChecklist(User.getInstance().getChecklists().get(i));
+    }
+
+    public void editChecklist(int i, String name) {
+        if (name.equals("")) {
+            return;
+        }
+
+        getChecklist(0).setName(name);
     }
 
     public void editItem(int i, String name) {
+        if (name.equals("")) {
+            return;
+        }
+
         currentChecklist.getLineItems().get(i).getItem().setName(name);
         refreshPrices();
     }

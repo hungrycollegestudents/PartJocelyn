@@ -122,10 +122,12 @@ public class ItemsActivity extends AppCompatActivity {
     }
 
     public void addItem(String name, int quantity) {
-
         controller.addItem(name, quantity);
         adapter.notifyDataSetChanged();
+        updateTotal();
+    }
 
+    public void updateTotal() {
         ((TextView) totalView.findViewById(R.id.total_text)).setText(String.format("Total: %.2f", getTotal()));
     }
 
@@ -145,11 +147,13 @@ public class ItemsActivity extends AppCompatActivity {
     public void clearList() {
         controller.clearChecklist();
         adapter.notifyDataSetChanged();
+        updateTotal();
     }
 
     public void deleteCheckedItems() {
         controller.deleteCheckedItems();
         adapter.notifyDataSetChanged();
         listView.invalidate();
+        updateTotal();
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.jocelyn.mychecklist.Controller;
 import com.example.jocelyn.mychecklist.model.Checklist;
 import com.example.jocelyn.mychecklist.R;
 
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 public class ChecklistsActivity extends AppCompatActivity {
 
     ListView listView;
-    ArrayList<Checklist> checklists = new ArrayList<>();
     ChecklistAdapter adapter;
+    Controller controller;
 
 
     @Override
@@ -28,26 +29,12 @@ public class ChecklistsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checklists);
 
+        controller = Controller.getInstance();
 
         listView = (ListView) findViewById(R.id.listChecklists);
 
-        adapter = new ChecklistAdapter(this, checklists);
+        adapter = new ChecklistAdapter(this, controller.getChecklists());
         listView.setAdapter(adapter);
-
-        //Checklist cl = (Checklist) getIntent().getSerializableExtra("checklist");
-
-//        if (cl != null) {
-//            System.out.println("TEST");
-//            //System.out.println(cl.getName());
-//            for (Checklist c : checklists) {
-//                if (c.getId() == cl.getId()) {
-//                    c.setLineItems(cl.getLineItems());
-//                    break;
-//                }
-//            }
-//        } else {
-//            addChecklist("Test Checklist");
-//        }
 
         addChecklist("Test Checklist");
 
@@ -68,7 +55,7 @@ public class ChecklistsActivity extends AppCompatActivity {
     public void test(int i) {
         //pass checklist items to new activity
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("checklist", checklists.get(i));
+        intent.putExtra("checklist", controller.getChecklist(i));
         startActivity(intent);
     }
 
@@ -95,21 +82,17 @@ public class ChecklistsActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_clearList:
-                clearList();
+                //clearList();
                 return true;
         }
         return false;
 
     }
 
-    public void clearList() {
-        checklists.clear();
-        adapter.notifyDataSetChanged();
-    }
 
     public void addChecklist(String name) {
         Checklist checklist = new Checklist(name);
-        checklists.add(checklist);
+        controller.addChecklist(checklist);
         adapter.notifyDataSetChanged();
     }
 
@@ -118,7 +101,6 @@ public class ChecklistsActivity extends AppCompatActivity {
         newFragment.thingy = new AddChecklistDialog.Thingy() {
             @Override
             public void idk(String name) {
-                System.out.println("WOW!");
                 addChecklist(name);
             }
         };

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class User {
 
     private ArrayList<Checklist> checklists;
+    private String username;
 
     private static User instance;
 
@@ -26,5 +27,13 @@ public class User {
 
     public void addChecklist(Checklist checklist) {
         checklists.add(checklist);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

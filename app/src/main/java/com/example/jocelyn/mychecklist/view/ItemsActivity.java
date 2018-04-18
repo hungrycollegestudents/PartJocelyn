@@ -142,6 +142,7 @@ public class ItemsActivity extends AppCompatActivity {
     public void refreshPrices() {
         controller.refreshPrices();
         adapter.notifyDataSetChanged();
+        updateTotal();
     }
 
     public void clearList() {

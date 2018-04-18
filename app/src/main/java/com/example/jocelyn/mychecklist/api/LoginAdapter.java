@@ -20,7 +20,7 @@ public class LoginAdapter {
     }
 
     public boolean checkCredentials(String username, String password) {
-        if (username.equalsIgnoreCase("test")) {
+        if (username != null && username.equalsIgnoreCase("test")) {
             if (password.equals("abc123")) {
                 return true;
             } else {

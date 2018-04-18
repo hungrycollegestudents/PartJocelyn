@@ -15,6 +15,8 @@ import com.example.jocelyn.mychecklist.model.Price;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
+
 
 public class APIAdapter {
 
@@ -40,7 +42,19 @@ public class APIAdapter {
         //If we are running in the emulator, just pretend to do stuff
         if (isEmulator()) {
             System.out.println("Simulating API query");
-            Price price = new Price(123.45);
+            float[] amounts = {
+                    2.99f,
+                    1.99f,
+                    2.75f,
+                    0.99f,
+                    2.87f,
+                    2.85f,
+                    1.95f,
+                    4.99f,
+                    3.99f,
+                    2.98f
+            };
+            Price price = new Price(amounts[new Random().nextInt(amounts.length)]);
             Item item = new Item(name, price);
 
             listener.onComplete(item);

@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import android.R;
 
+import com.example.jocelyn.mychecklist.Controller;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
@@ -25,10 +27,9 @@ public class LoginActivity extends AppCompatActivity {
      */
 
     public void submitLoginCredentials(View view) {
-        Intent intent = new Intent(this, ChecklistsActivity.class);
-        //EditText editText = (EditText) findViewById(R.id.editText);
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+        if (Controller.getInstance().login(null, null)) {
+            Intent intent = new Intent(this, ChecklistsActivity.class);
+            startActivity(intent);
+        }
     }
 }

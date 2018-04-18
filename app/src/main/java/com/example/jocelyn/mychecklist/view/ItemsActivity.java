@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.jocelyn.mychecklist.Controller;
 import com.example.jocelyn.mychecklist.api.APIAdapter;
 import com.example.jocelyn.mychecklist.model.Checklist;
 import com.example.jocelyn.mychecklist.model.Item;
@@ -31,19 +32,18 @@ public class ItemsActivity extends AppCompatActivity {
     Checklist checklist;
     ItemAdapter adapter;
 
-    RequestQueue queue;
-    APIAdapter api;
+    Controller controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent myIntent = new Intent(this, ChecklistsActivity.class);
-        //startActivity(myIntent);
+        controller = Controller.getInstance();
+        controller.setupAPI(getApplicationContext());
 
         checklist = (Checklist) getIntent().getSerializableExtra("checklist");
-
+        controller.setCurrentChecklist(checklist);
         setTitle(checklist.getName());
 
         listView = (ListView) findViewById(R.id.listItems);
@@ -78,18 +78,8 @@ public class ItemsActivity extends AppCompatActivity {
             checklist.add(lineItem);
         }
         refreshPrices();
-
-        queue = Volley.newRequestQueue(this.getApplicationContext());
-
-        //Create object that adapts http json API (probably should change to singleton)
-        api = new APIAdapter(queue);
     }
 
-
-
-    public void test() {
-
-    }
 
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -125,56 +115,18 @@ public class ItemsActivity extends AppCompatActivity {
         newFragment.thingy = new AddItemDialog.Thingy() {
             @Override
             public void idk(String name, int quantity) {
-                System.out.println("WOW!");
                 addItem(name, quantity);
             }
         };
         newFragment.show(getFragmentManager(), "adding");
     }
 
-    private Item search(String name) {
-        final Item item = new Item();
-
-        api.queryItem(name, new APIAdapter.SearchListener() {
-            @Override
-            public void onComplete(Item i) {
-                //This method will be run when the search is finished.
-                //i is an Item object. It will be the top/first item returned from the search
-
-                item.setName(i.getName());
-                item.setPrice(i.getPrice());
-            }
-        });
-
-        return item;
-    }
-
     public void addItem(String name, int quantity) {
 
-        Item item = search(name);
-
-        LineItem lineItem = new LineItem(item, quantity);
-
-        checklist.add(lineItem);
+        controller.addItem(name, quantity);
         adapter.notifyDataSetChanged();
 
         ((TextView) totalView.findViewById(R.id.total_text)).setText("Total: " + String.valueOf(getTotal()));
-    }
-
-    public void refreshPrices() {
-        for (LineItem lineItem : checklist.getLineItems()) {
-            String name = lineItem.getItem().getName();
-            Item item = search(name);
-
-            lineItem.setItem(item);
-        }
-
-        adapter.notifyDataSetChanged();
-    }
-
-    public void clearList() {
-        checklist.getLineItems().clear();
-        adapter.notifyDataSetChanged();
     }
 
     public float getTotal() {
@@ -185,15 +137,18 @@ public class ItemsActivity extends AppCompatActivity {
         return total;
     }
 
-    public void deleteCheckedItems() {
-        Iterator<LineItem> iterator = checklist.getLineItems().iterator();
-        while (iterator.hasNext()) {
-            LineItem lineItem = iterator.next();
-            if (lineItem.isChecked()) {
-                iterator.remove();
-            }
-        }
+    public void refreshPrices() {
+        controller.refreshPrices();
+        adapter.notifyDataSetChanged();
+    }
 
+    public void clearList() {
+        controller.clearChecklist();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void deleteCheckedItems() {
+        controller.deleteCheckedItems();
         adapter.notifyDataSetChanged();
         listView.invalidate();
     }

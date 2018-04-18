@@ -126,7 +126,7 @@ public class ItemsActivity extends AppCompatActivity {
         controller.addItem(name, quantity);
         adapter.notifyDataSetChanged();
 
-        ((TextView) totalView.findViewById(R.id.total_text)).setText("Total: " + String.valueOf(getTotal()));
+        ((TextView) totalView.findViewById(R.id.total_text)).setText(String.format("Total: %.2f", getTotal()));
     }
 
     public float getTotal() {

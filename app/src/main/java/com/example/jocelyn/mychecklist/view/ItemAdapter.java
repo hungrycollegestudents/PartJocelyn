@@ -42,7 +42,7 @@ public class ItemAdapter extends ArrayAdapter<LineItem> {
 
 
         checkbox.setText(String.valueOf(lineItem.getQuantity()) + "x " + item.getName());
-        price_view.setText(String.valueOf(lineItem.getItem().getPrice().getAmount()));
+        price_view.setText(String.format("%.2f", lineItem.getItem().getPrice().getAmount() * lineItem.getQuantity()));
 
         checkbox.setChecked(lineItem.isChecked());
 

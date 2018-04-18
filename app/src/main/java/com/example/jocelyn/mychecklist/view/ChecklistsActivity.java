@@ -15,8 +15,6 @@ import com.example.jocelyn.mychecklist.Controller;
 import com.example.jocelyn.mychecklist.model.Checklist;
 import com.example.jocelyn.mychecklist.R;
 
-import java.util.ArrayList;
-
 public class ChecklistsActivity extends AppCompatActivity {
 
     ListView listView;
@@ -28,6 +26,7 @@ public class ChecklistsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checklists);
+        setTitle("My Checklists");
 
         controller = Controller.getInstance();
 
@@ -36,8 +35,9 @@ public class ChecklistsActivity extends AppCompatActivity {
         adapter = new ChecklistAdapter(this, controller.getChecklists());
         listView.setAdapter(adapter);
 
-        addChecklist("Test Checklist");
-
+        if (controller.getChecklists().size() == 0) {
+            addChecklist("Test Checklist");
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class ChecklistsActivity extends AppCompatActivity {
 
     public void test(int i) {
         //pass checklist items to new activity
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ItemsActivity.class);
         intent.putExtra("checklist", controller.getChecklist(i));
         startActivity(intent);
     }

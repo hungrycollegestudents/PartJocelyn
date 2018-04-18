@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class User {
 
-    private ArrayList<Checklist> checklists;
+    private ArrayList<Checklist> checklists = new ArrayList<Checklist>();
     private String username;
 
     private static User instance;

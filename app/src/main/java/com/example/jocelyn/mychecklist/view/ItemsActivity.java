@@ -23,7 +23,7 @@ import com.example.jocelyn.mychecklist.R;
 
 import java.util.Iterator;
 
-public class MainActivity extends AppCompatActivity {
+public class ItemsActivity extends AppCompatActivity {
 
     ListView listView;
     View totalView;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         checklist = (Checklist) getIntent().getSerializableExtra("checklist");
 
+        setTitle(checklist.getName());
 
         listView = (ListView) findViewById(R.id.listItems);
 
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         checklist.add(lineItem);
         adapter.notifyDataSetChanged();
 
-        ((TextView) totalView.findViewById(R.id.total_text)).setText(String.valueOf(getTotal()));
+        ((TextView) totalView.findViewById(R.id.total_text)).setText("Total: " + String.valueOf(getTotal()));
     }
 
     public void refreshPrices() {
@@ -196,36 +197,4 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         listView.invalidate();
     }
-
-
-    public static boolean isEmulator() {
-        return Build.FINGERPRINT.startsWith("generic")
-                || Build.FINGERPRINT.startsWith("unknown")
-                || Build.MODEL.contains("google_sdk")
-                || Build.MODEL.contains("Emulator")
-                || Build.MODEL.contains("Android SDK built for x86")
-                || Build.MANUFACTURER.contains("Genymotion")
-                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
-                || "google_sdk".equals(Build.PRODUCT);
-    }
-
-    /*
-    public void addItemPrompt(View view){
-        final EditText addNewItemText = new EditText(this);
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Add a new Item")
-                .setView(addNewItemText)
-                .setPositiveButton("Add", new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog, int which){
-                        String item = String.valueOf(addNewItemText.getText());
-                        Log.d(TAG, "Item to add: " + item);
-                    }
-                })
-                .setNegativeButton("Cancel" , null)
-                .create();
-        dialog.show();
-    }
-    */
-
 }

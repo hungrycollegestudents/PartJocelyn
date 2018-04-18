@@ -1,6 +1,7 @@
 package com.example.jocelyn.mychecklist.api;
 
 
+import android.os.Build;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -10,7 +11,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.jocelyn.mychecklist.model.Item;
 import com.example.jocelyn.mychecklist.model.Price;
-import com.example.jocelyn.mychecklist.view.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,10 +24,21 @@ public class APIAdapter {
         this.queue = queue;
     }
 
+    public boolean isEmulator() {
+        return Build.FINGERPRINT.startsWith("generic")
+                || Build.FINGERPRINT.startsWith("unknown")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+                || "google_sdk".equals(Build.PRODUCT);
+    }
+
     public void queryItem(String name, final SearchListener listener) {
 
         //If we are running in the emulator, just pretend to do stuff
-        if (MainActivity.isEmulator()) {
+        if (isEmulator()) {
             System.out.println("Simulating API query");
             Price price = new Price(123.45);
             Item item = new Item(name, price);

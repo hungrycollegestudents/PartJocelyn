@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.example.jocelyn.mychecklist.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="353dp"
+        android:layout_height="461dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.454">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="196dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/textView_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:text="GroceryList" />
+
+        <EditText
+            android:id="@+id/editText"
+            style="@style/editText_style"
+            android:hint="Username"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editText2"
+            style="@style/editText_style"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/LoginButton"
+            style="@style/button_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="submitLoginCredentials"
+            android:text="Login" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/textView_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forgot your password?" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
+

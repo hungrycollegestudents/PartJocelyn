@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.jocelyn.mychecklist.Controller;
 import com.example.jocelyn.mychecklist.model.Checklist;
 import com.example.jocelyn.mychecklist.R;
 
@@ -41,7 +42,8 @@ public class ChecklistAdapter extends ArrayAdapter<Checklist> {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                remove(checklist);
+                //remove(checklist);
+                Controller.getInstance().deleteChecklist(checklist);
                 notifyDataSetChanged();
             }
         });

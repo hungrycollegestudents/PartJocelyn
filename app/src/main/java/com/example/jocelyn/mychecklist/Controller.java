@@ -120,4 +120,25 @@ public class Controller {
             }
         }
     }
+
+    public void deleteChecklist(Checklist checklist) {
+        User.getInstance().getChecklists().remove(checklist);
+    }
+
+    public void deleteChecklist(int i) {
+        User.getInstance().getChecklists().remove(i);
+    }
+
+    public void editItem(int i, String name) {
+        currentChecklist.getLineItems().get(i).getItem().setName(name);
+        refreshPrices();
+    }
+
+    public LineItem getLineItem(int i) {
+        return currentChecklist.getLineItems().get(i);
+    }
+
+    public ArrayList<LineItem> getLineItems() {
+        return currentChecklist.getLineItems();
+    }
 }

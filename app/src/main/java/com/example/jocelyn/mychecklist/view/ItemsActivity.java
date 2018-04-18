@@ -128,7 +128,7 @@ public class ItemsActivity extends AppCompatActivity {
     }
 
     public void updateTotal() {
-        ((TextView) totalView.findViewById(R.id.total_text)).setText(String.format("Total: %.2f", getTotal()));
+        ((TextView) totalView.findViewById(R.id.total_text)).setText(String.format("Total: $%.2f", getTotal()));
     }
 
     public float getTotal() {
